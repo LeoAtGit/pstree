@@ -20,7 +20,7 @@ typedef struct proc {
 
 void change_pid_dir_name(char *dest, char *appendix);
 
-void find_string(const char *haystack, const char *needle, char *found_value); // use strstr()
+void find_string(const char *haystack, const char *needle, char *found_value); 
 
 int init(int fd);
 
@@ -31,6 +31,12 @@ void insert_child_proc(proc *child);
 int draw();
 
 void draw_proc(children_proc *child_crawler);
+
+int check_for_children(proc *process);
+
+int draw_children(proc *process, int strlen_parent);
+
+void draw_all_children(proc *parent);
 
 #endif
 

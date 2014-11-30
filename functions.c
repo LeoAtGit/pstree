@@ -148,6 +148,61 @@ void insert_child_proc(proc *child){
 	}
 }
 
+int check_for_children(proc *process){
+	if (process->child_proc != NULL){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
+int draw_children(proc *process, int strlen_parent){
+	for (int i = 0; i < strlen_parent; i++){
+		printf(" ");
+	}
+	printf(" --- %s", process->child_proc->link_to_proc->Name);
+
+	return 0;
+}
+
+void draw_all_children(proc *parent){
+	children_proc *child = NULL;
+	if (parent->child_proc != NULL){
+		child = parent->child_proc;
+	}
+	else{
+		return;
+	}
+
+	printf(" --- %s\n", child->Name);
+	if (child->next_proc != NULL){
+		child = child->next_proc;
+	}
+
+	while (child->next_proc != NULL){
+		for (int i = 0; i < strlen(parent->Name); i++){
+			printf(" ");
+		}
+		printf(" --- %s", child->Name);
+
+		printf("\n");
+
+		child = child->next_proc;
+	}
+}
+
+int draw(){
+	proc *crawler = &first_process;
+	crawler = crawler->next_proc;
+
+	printf("%s", crawler->Name);
+	draw_all_children(crawler);
+
+	return 0;
+}
+
+/*
 int draw(){
 	// print Name
 	// goto crawler->child_proc
@@ -177,7 +232,7 @@ int draw(){
 	
 	return 0;
 }
-
+*/
 /*
 int draw(){
 	proc *crawler = &first_process;
