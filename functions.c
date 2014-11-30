@@ -259,7 +259,7 @@ void draw_proc(children_proc *child_crawler){
 
 		child_crawler = child_crawler->next_proc;
 	}
-}
+}//
 */
 
 #endif
