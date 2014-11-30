@@ -1,0 +1,22 @@
+First we need a struct with the following fields:
+All these structs have to be linked in a linked list.
+
+	Name
+	Pid
+	PPid
+	Linked list 	// with all the direct related childs
+
+1. Iterate through all of the directorys and their status files 
+2. Look first for Name, Pid and PPid. 
+3. Then we iterate through the linked list of all the processes
+4. At each step we compare the Pid of our new process to the PPid of the process in the linked list
+   - if the two numbers are the same, then add the node of our newly inspected process to the linked list of all the 
+     children this other process has
+
+5. When there are no more processes left, we start to print them to the screen
+6. We start printing the process with PPid = 0, i.e. init, systemd, etc
+7. We add this string " |-> " to the output and print the first child of the process with Pid 1
+8. We now continue to the child. If the child has children, we print " |-> " and go to this child's children etc
+   - if the child doesnt have children we put a newline, and strlen from the parent spaces, " |-> " and start with the 
+     new children and so on
+

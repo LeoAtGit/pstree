@@ -1,0 +1,8 @@
+systemd |-> ramdisk
+	|-> startx |-> chromium |-> sandbox1
+	|	   |	      	|-> sandbox2
+	|	   |	      	|-> sandbox3
+	|	   |-> htop
+	|-> bash
+	|-> whatever
+
