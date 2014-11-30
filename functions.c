@@ -166,30 +166,46 @@ int draw_children(proc *process, int strlen_parent){
 	return 0;
 }
 
-void draw_all_children(proc *parent){
+int draw_all_children(proc *parent, int indentation){
+	int return_value = 0;
 	children_proc *child = NULL;
 	if (parent->child_proc != NULL){
 		child = parent->child_proc;
 	}
 	else{
-		return;
+		return 1; // we need a \n
 	}
 
-	printf(" --- %s\n", child->Name);
-	if (child->next_proc != NULL){
-		child = child->next_proc;
-	}
-
-	while (child->next_proc != NULL){
-		for (int i = 0; i < strlen(parent->Name); i++){
-			printf(" ");
+	printf("  --- %s", child->Name);
+	if (child->link_to_proc != NULL){
+		return_value = draw_all_children(child->link_to_proc, indentation + strlen(parent->Name)) == 1;
+		if (return_value == 1){
+			printf("\n");
 		}
-		printf(" --- %s", child->Name);
+	}
+
+	while (child->next_proc != NULL || child->link_to_proc->child_proc != NULL){
+		if (return_value == 0){
+			for (int i = 0; i < indentation; i++){
+				printf(" ");
+			}
+			printf(" |--- %s", child->Name);
+		}
+		/*if (child->link_to_proc->child_proc != NULL){
+			draw_all_children(child->link_to_proc);
+		}*/
+
+		if (child->link_to_proc->child_proc != NULL){
+			draw_all_children(child->link_to_proc, indentation + strlen(parent->Name));
+		}
 
 		printf("\n");
 
 		child = child->next_proc;
+		return_value = 0;
 	}
+
+	return 0;
 }
 
 int draw(){
@@ -197,7 +213,7 @@ int draw(){
 	crawler = crawler->next_proc;
 
 	printf("%s", crawler->Name);
-	draw_all_children(crawler);
+	draw_all_children(crawler, strlen(crawler->Name));
 
 	return 0;
 }

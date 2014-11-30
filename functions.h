@@ -36,7 +36,7 @@ int check_for_children(proc *process);
 
 int draw_children(proc *process, int strlen_parent);
 
-void draw_all_children(proc *parent);
+int draw_all_children(proc *parent, int indentation);
 
 #endif
 
