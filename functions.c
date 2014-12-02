@@ -206,7 +206,7 @@ int draw_all_children(proc *parent, int indentation){
 		}
 		else{
 			parent->child_proc = NULL;
-			return 2; // TODO here is the bug :(
+			return 2; 
 		}
 		return_value = 0;
 	}
