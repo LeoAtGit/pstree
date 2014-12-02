@@ -178,10 +178,7 @@ int draw_all_children(proc *parent, int indentation){
 
 	printf("  --- %s", child->Name);
 	if (child->link_to_proc != NULL){
-		return_value = draw_all_children(child->link_to_proc, indentation + strlen(parent->Name)); 
-		if (return_value == 1){
-			printf("\n");
-		}
+		return_value = draw_all_children(child->link_to_proc, indentation + 6 + strlen(child->Name)); 
 	}
 
 	while (child->next_proc != NULL || child->link_to_proc->child_proc != NULL){
@@ -191,17 +188,20 @@ int draw_all_children(proc *parent, int indentation){
 			}
 			printf(" |--- %s", child->Name);
 		}
-		/*if (child->link_to_proc->child_proc != NULL){
-			draw_all_children(child->link_to_proc);
-		}*/
 
 		if (child->link_to_proc->child_proc != NULL){
-			draw_all_children(child->link_to_proc, indentation + strlen(parent->Name + 6)); // 6 because of "  --- %s"!!! // TODO HERE IS THE BUG???! look gdb
+			draw_all_children(child->link_to_proc, indentation + 6 + strlen(child->Name)); // 6 because of "  --- %s"
 		}
 
 		printf("\n");
 
-		child = child->next_proc;
+		if (child->next_proc != NULL){ // TODO here is the bug
+			child = child->next_proc;
+		}
+		else{
+			//child = child->link_to_proc->child_proc;
+			break;
+		}
 		return_value = 0;
 	}
 
