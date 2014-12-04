@@ -1,0 +1,4 @@
+comment the source files functions.c and main.c
+check for errors on function calls (in main)
+free the used memory so valgrind wont complain
+

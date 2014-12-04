@@ -42,8 +42,7 @@ void change_pid_dir_name (char *dest, char *appendix){
         dest[6 + i + 7] = '\0';
 }
 
-void find_string 
-(const char *haystack, const char *needle, char *found_value){
+void find_string (const char *haystack, const char *needle, char *found_value){
 	int needle_len = strlen(needle);
 	char *buffer = strstr(haystack, needle);
 	char value_buffer[255];
@@ -96,6 +95,9 @@ int init (int fd){
 	int local_ppid_int = atoi(local_ppid);
 	curr_process->PPid = local_ppid_int;
 
+	// "drawn"
+	curr_process->drawn = 0;
+
 	// make a link in the linked list
 	crawler->next_proc = curr_process;
 	curr_process->next_proc = NULL;
@@ -135,6 +137,7 @@ void insert_child_proc(proc *child){
 			new_child->Name = child->Name;
 			new_child->next_proc = NULL;
 			new_child->link_to_proc = child;
+			new_child->drawn = 0;
 
 			if (c_proc == NULL){
 				crawler->child_proc = new_child;
@@ -207,6 +210,10 @@ int draw(){
 	proc *crawler = &first_process;
 	crawler = crawler->next_proc;
 
+	printf("%s", crawler->Name);
+	draw_all_children(crawler, strlen(crawler->Name));
+
+	crawler = crawler->next_proc;
 	printf("%s", crawler->Name);
 	draw_all_children(crawler, strlen(crawler->Name));
 

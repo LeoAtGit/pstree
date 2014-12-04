@@ -1,3 +1,8 @@
 exercise
 functions.h.gch
 *.o
+functions.c.swp
+.functions.h.swp
+functions.alt_und_buggy.c
+functions.neu_und_buggy.c
+
