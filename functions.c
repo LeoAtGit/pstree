@@ -148,24 +148,6 @@ void insert_child_proc(proc *child){
 	}
 }
 
-int check_for_children(proc *process){
-	if (process->child_proc != NULL){
-		return 1;
-	}
-	else{
-		return 0;
-	}
-}
-
-int draw_children(proc *process, int strlen_parent){
-	for (int i = 0; i < strlen_parent; i++){
-		printf(" ");
-	}
-	printf(" --- %s", process->child_proc->link_to_proc->Name);
-
-	return 0;
-}
-
 int draw_all_children(proc *parent, int indentation){
 	int return_value = 0;
 	int already_drawn = 0;
