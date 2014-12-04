@@ -6,6 +6,7 @@ struct proc;
 
 typedef struct children_proc {
 	char *Name;
+	int drawn;
 	struct proc *link_to_proc;
 	struct children_proc *next_proc;
 } children_proc;
@@ -14,6 +15,7 @@ typedef struct proc {
 	char *Name;
 	int Pid;
 	int PPid;
+	int drawn;
 	struct proc *next_proc;
 	children_proc *child_proc;
 } proc;
@@ -30,13 +32,17 @@ void insert_child_proc(proc *child);
 
 int draw();
 
-void draw_proc(children_proc *child_crawler);
+//void draw_proc(children_proc *child_crawler);
 
-int check_for_children(proc *process);
+//int check_for_children(proc *process);
 
-int draw_children(proc *process, int strlen_parent);
+//int draw_children(proc *process, int strlen_parent);
 
 int draw_all_children(proc *parent, int indentation);
+
+int draw_first_child(proc *parent, int indentation);
+
+int draw_rest_children(proc *parent, int indetation);
 
 #endif
 

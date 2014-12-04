@@ -168,6 +168,7 @@ int draw_children(proc *process, int strlen_parent){
 
 int draw_all_children(proc *parent, int indentation){
 	int return_value = 0;
+	int already_drawn = 0;
 	children_proc *child = NULL;
 	if (parent->child_proc != NULL){
 		child = parent->child_proc;
@@ -177,29 +178,34 @@ int draw_all_children(proc *parent, int indentation){
 	}
 
 	printf("  --- %s", child->Name);
-	if (child->link_to_proc != NULL){
+	child->drawn = 1;
+	if (child->link_to_proc->child_proc != NULL && child->drawn == 0){
 		return_value = draw_all_children(child->link_to_proc, indentation + 6 + strlen(child->Name)); 
 		if (return_value == 2){
 			parent->child_proc = NULL;
 		}
+	} 
+	else{
+		already_drawn = 1;
 	}
 
-	while (child->next_proc != NULL || child->link_to_proc->child_proc != NULL){
-		if (return_value == 0){
+	while (child->next_proc != NULL || child->link_to_proc->child_proc != NULL){ 
+		if (return_value == 0 && already_drawn == 0 && child->drawn == 0){
 			for (int i = 0; i < indentation; i++){
 				printf(" ");
 			}
 			printf(" |--- %s", child->Name);
+			child->drawn = 1;
 		}
 
 		if (child->link_to_proc->child_proc != NULL){
+			child->drawn = 1;
 			return_value = draw_all_children(child->link_to_proc, indentation + 6 + strlen(child->Name)); // 6 because of "  --- %s"
-			if (return_value == 2){
-				parent->child_proc = NULL;
-			}
 		}
 
-		printf("\n");
+		if (return_value != 2){
+			printf("\n");
+		}
 
 		if (child->next_proc != NULL){ 
 			child = child->next_proc;
@@ -209,6 +215,7 @@ int draw_all_children(proc *parent, int indentation){
 			return 2; 
 		}
 		return_value = 0;
+		already_drawn = 0;
 	}
 
 	return 0;
