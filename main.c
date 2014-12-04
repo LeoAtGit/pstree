@@ -24,10 +24,10 @@ int main(){
 	directory = opendir("/proc/");
 	dir_entry = readdir(directory);
 
-	// Now we will initialize the linked list with the values from the status files
-	// We will not initialize the .child_proc linked list of each node
+	// We initialize the linked list with the values from the status files
 	while (dir_entry != NULL){
-		if (strcmp(dir_entry->d_name, ".") == 0 || strcmp(dir_entry->d_name, ",,") == 0){
+		// go through all of the /proc/xxx/status files and pass them to init()
+		if (strcmp(dir_entry->d_name, ".") == 0 || strcmp(dir_entry->d_name, "..") == 0){
 			dir_entry = readdir(directory);
 			continue;
 		}
@@ -56,11 +56,10 @@ int main(){
 		dir_entry = readdir(directory);
 	}
 
-	// Now we can start to initialize the Linked list a little more. Since we have all of the entries we want, we look who is whose child process and add that to the list
+	// Now we can start to initialize the linked list a little more. Since we have all of the entries we want, we look who is whose child process and add that to the list
 	init_child_proc();
 
-	// As the last step, we will print out the stuff
-	
+	// As the last step, we will print out the two connected linked list in a tree format
 	draw();	
 
 	return 0;
