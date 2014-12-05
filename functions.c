@@ -121,7 +121,7 @@ int init (int fd){
 	return 0;
 }
 
-int init_child_proc(){
+void init_child_proc(){
 	proc *crawler = &first_process;
 
 	// crawl along the linked list and add a child_proc to the nodes
@@ -130,8 +130,6 @@ int init_child_proc(){
 
 		crawler = crawler->next_proc;
 	}
-
-	return 0;
 }
 
 void insert_child_proc(proc *child){
@@ -235,7 +233,7 @@ int draw_all_children(proc *parent, int indentation){
 	return 0;
 }
 
-int draw(){
+void draw(){
 	proc *crawler = &first_process;
 	crawler = crawler->next_proc;
 
@@ -249,8 +247,6 @@ int draw(){
 	// This is normally not shown on the original pstree, if you want the original functionality then comment the next part out.
 	printf("%s", crawler->Name);
 	draw_all_children(crawler, strlen(crawler->Name));
-
-	return 0;
 }
 
 #endif

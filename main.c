@@ -47,7 +47,9 @@ int main(){
 			if (fd) close (fd);
 		}
 
-		init(fd);
+		if (init(fd) == -1){
+			printf("Some error occured when trying to initialze the data structure.");
+		}
 
 		if (close(fd) == -1){
 			printf("The file couldnt be closed, It doesnt exist anymore.\n");

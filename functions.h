@@ -63,7 +63,7 @@ int init(int fd);
  * Goes through the currently available linked list and adds the entries child_proc to each process that has a child
  *
  * */
-int init_child_proc();
+void init_child_proc();
 
 /*
  * Inserts child to the process where it belongs to
@@ -77,7 +77,7 @@ void insert_child_proc(proc *child);
  * And the process		 with Pid = 2 (should be kthreadd)
  *
  * */
-int draw();
+void draw();
 
 /*
  * Draws all of the children of parent with an indentation of indentation

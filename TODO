@@ -1,0 +1,2 @@
+	- free the used memory so valgrind wont complain
+

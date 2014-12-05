@@ -1,3 +1,0 @@
-check for errors on function calls (in main)
-free the used memory so valgrind wont complain
-
