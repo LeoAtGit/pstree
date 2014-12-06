@@ -61,8 +61,11 @@ int main(){
 	// Now we can start to initialize the linked list a little more. Since we have all of the entries we want, we look who is whose child process and add that to the list
 	init_child_proc();
 
-	// As the last step, we will print out the two connected linked list in a tree format
+	// As the next step, we will print out the two connected linked list in a tree format
 	draw();	
+
+	// Finally we will clean up and free all the memory we used
+	clean_up();
 
 	return 0;
 }

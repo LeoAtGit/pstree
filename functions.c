@@ -186,11 +186,6 @@ int draw_all_children(proc *parent, int indentation){
 	// if the process has a child process, which wasnt already drawn on the screen then start with the recursion
 	if (child->link_to_proc->child_proc != NULL && child->drawn == 0){
 		return_value = draw_all_children(child->link_to_proc, indentation + 6 + strlen(child->Name)); // the number 6 is the strlen of " |--- %s"
-
-		// this is a workaround so that there are no duplicate entries on the screen. //TODO implement here a cleaner() function
-		if (return_value == 2){
-			parent->child_proc = NULL;
-		}
 	} 
 	else{
 		already_drawn = 1;
@@ -221,8 +216,6 @@ int draw_all_children(proc *parent, int indentation){
 			child = child->next_proc;
 		}
 		else{
-			// again here the workaround so that we dont see duplicated entries on the screen. //TODO implement here a cleaner() function
-			parent->child_proc = NULL;
 			return 2; 
 		}
 
@@ -244,9 +237,42 @@ void draw(){
 	crawler = crawler->next_proc;
 
 	// this is going to be the process with the Pid = 2, i.e. kthreadd. 
-	// This is normally not shown on the original pstree, if you want the original functionality then comment the next part out.
+	// this is normally not shown on the original pstree, if you want the original functionality then comment the next part out.
 	printf("%s", crawler->Name);
 	draw_all_children(crawler, strlen(crawler->Name));
+}
+
+void clean_up(){
+	while (first_process.next_proc != NULL){
+		proc *crawler = &first_process;
+	
+		while(crawler->next_proc != NULL){
+			proc *crawler_temp = crawler;
+
+			crawler = crawler->next_proc;
+			if (crawler->next_proc == NULL){
+				crawler_temp->next_proc = NULL;
+
+				while (crawler->child_proc != NULL){
+					children_proc *child_crawler = crawler->child_proc;
+
+					while (child_crawler->next_proc != NULL){
+						children_proc *child_crawler_temp = child_crawler;
+
+						child_crawler = child_crawler->next_proc;
+						if (child_crawler->next_proc == NULL){
+							child_crawler_temp->next_proc = NULL;
+						}
+					}
+
+					free(child_crawler);
+					crawler->child_proc = NULL;
+				}
+			}
+		}
+
+		free(crawler);
+	}
 }
 
 #endif

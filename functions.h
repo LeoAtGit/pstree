@@ -85,5 +85,11 @@ void draw();
  * */
 int draw_all_children(proc *parent, int indentation);
 
+/*
+ * free() all the memory that we used
+ *
+ * */
+void clean_up();
+
 #endif
 
